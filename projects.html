@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research Projects - Xiaoyan Li 李笑言</title>
+<meta name="description" content="Research projects of Xiaoyan Li: computational neuroscience meets machine learning, large language models, computer vision, biomedical and environmental AI.">
+<link rel="icon" href="./images/image.jpg">
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --surface-2: #eef1f5;
+    --text: #1d2433;
+    --muted: #5b6474;
+    --line: #dde2ea;
+    --accent: #2457a6;
+    --accent-soft: #e4ecf9;
+    --chip-brain: #7c3aed; --chip-brain-bg: #efe7fd;
+    --chip-llm: #0f766e;   --chip-llm-bg: #dff5f1;
+    --chip-cv: #b45309;    --chip-cv-bg: #fdecd4;
+    --chip-bio: #be185d;   --chip-bio-bg: #fbe1ec;
+    --chip-env: #1d4ed8;   --chip-env-bg: #e0e9ff;
+    --chip-theory: #475569;--chip-theory-bg: #e6eaf0;
+    --shadow: 0 1px 2px rgba(16,24,40,.06), 0 8px 24px -12px rgba(16,24,40,.18);
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1420; --surface: #171d2b; --surface-2: #1f2737; --text: #e7ebf3; --muted: #9aa4b8;
+      --line: #2b3447; --accent: #8ab4ff; --accent-soft: #1c2a47;
+      --chip-brain: #c4b5fd; --chip-brain-bg: #2b2250;
+      --chip-llm: #7dd3c8;   --chip-llm-bg: #10332f;
+      --chip-cv: #fdba74;    --chip-cv-bg: #3a2a14;
+      --chip-bio: #f9a8d4;   --chip-bio-bg: #3d1a2c;
+      --chip-env: #a5b4fc;   --chip-env-bg: #1c2550;
+      --chip-theory: #cbd5e1;--chip-theory-bg: #2a3242;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1420; --surface: #171d2b; --surface-2: #1f2737; --text: #e7ebf3; --muted: #9aa4b8;
+    --line: #2b3447; --accent: #8ab4ff; --accent-soft: #1c2a47;
+    --chip-brain: #c4b5fd; --chip-brain-bg: #2b2250;
+    --chip-llm: #7dd3c8;   --chip-llm-bg: #10332f;
+    --chip-cv: #fdba74;    --chip-cv-bg: #3a2a14;
+    --chip-bio: #f9a8d4;   --chip-bio-bg: #3d1a2c;
+    --chip-env: #a5b4fc;   --chip-env-bg: #1c2550;
+    --chip-theory: #cbd5e1;--chip-theory-bg: #2a3242;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .masthead {
+    position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter: saturate(160%) blur(10px); -webkit-backdrop-filter: saturate(160%) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead__inner { max-width: 1120px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .brand { font-weight: 700; font-size: 17px; color: var(--text); letter-spacing: .01em; }
+  .brand:hover { text-decoration: none; color: var(--accent); }
+  .nav { display: flex; gap: 6px; }
+  .nav a { padding: 6px 12px; border-radius: 8px; color: var(--muted); font-weight: 500; font-size: 15px; }
+  .nav a:hover { background: var(--surface-2); text-decoration: none; color: var(--text); }
+  .nav a[aria-current="page"] { color: var(--accent); background: var(--accent-soft); }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px 64px; }
+
+  .hero { padding: 44px 0 20px; }
+  .hero h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.2; margin: 0 0 10px; letter-spacing: -.01em; }
+  .hero p { margin: 0; color: var(--muted); max-width: 72ch; font-size: 17px; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; padding: 18px 0 26px; position: sticky; top: 56px; z-index: 10; background: var(--bg); }
+  .filters button {
+    border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 999px;
+    padding: 6px 14px; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; transition: all .15s;
+  }
+  .filters button:hover { border-color: var(--accent); color: var(--text); }
+  .filters button.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .filters .count { color: var(--muted); font-size: 14px; align-self: center; margin-left: auto; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 22px; }
+  @media (max-width: 420px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(16,24,40,.06), 0 18px 40px -16px rgba(16,24,40,.28); }
+  .card.hidden { display: none; }
+  .card.featured { grid-column: span 2; }
+  @media (max-width: 740px) { .card.featured { grid-column: span 1; } }
+
+  .media {
+    position: relative; aspect-ratio: 16 / 9; background: var(--surface-2); overflow: hidden; cursor: zoom-in; border-bottom: 1px solid var(--line);
+  }
+  .card.featured .media { aspect-ratio: 21 / 9; }
+  .media img, .media video { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .media.contain img { object-fit: contain; background: #fff; padding: 8px; }
+  .media .tag {
+    position: absolute; left: 10px; top: 10px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    background: rgba(17,24,39,.72); color: #fff; padding: 3px 8px; border-radius: 6px; backdrop-filter: blur(4px);
+  }
+  .media .zoom {
+    position: absolute; right: 10px; bottom: 10px; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center;
+    background: rgba(17,24,39,.6); color: #fff; opacity: 0; transition: opacity .15s;
+  }
+  .media:hover .zoom { opacity: 1; }
+  .media.placeholder { display: grid; place-items: center; cursor: default; }
+  .media.placeholder .glyph { font-size: 44px; opacity: .55; }
+
+  .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+  .chip { font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; letter-spacing: .01em; }
+  .chip.brain { color: var(--chip-brain); background: var(--chip-brain-bg); }
+  .chip.llm { color: var(--chip-llm); background: var(--chip-llm-bg); }
+  .chip.cv { color: var(--chip-cv); background: var(--chip-cv-bg); }
+  .chip.bio { color: var(--chip-bio); background: var(--chip-bio-bg); }
+  .chip.env { color: var(--chip-env); background: var(--chip-env-bg); }
+  .chip.theory { color: var(--chip-theory); background: var(--chip-theory-bg); }
+  .year { font-weight: 600; }
+  h3 { margin: 0; font-size: 18px; line-height: 1.3; letter-spacing: -.005em; }
+  .venue { margin: 0; font-size: 13.5px; color: var(--muted); font-weight: 500; }
+  .venue strong { color: var(--text); font-weight: 600; }
+  .desc { margin: 2px 0 0; font-size: 14.5px; color: var(--text); opacity: .92; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 10px; }
+  .links a {
+    font-size: 13px; font-weight: 600; padding: 5px 11px; border-radius: 8px; border: 1px solid var(--line); color: var(--text); background: var(--surface);
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .links a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .links a.primary:hover { filter: brightness(1.08); color: #fff; }
+
+  .section-title { margin: 44px 0 14px; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+  .section-title small { color: var(--muted); font-weight: 500; font-size: 14px; }
+
+  /* lightbox */
+  .lb { position: fixed; inset: 0; background: rgba(8,11,18,.9); display: none; z-index: 50; align-items: center; justify-content: center; padding: 24px; }
+  .lb.open { display: flex; }
+  .lb figure { margin: 0; max-width: min(1200px, 96vw); width: 100%; display: flex; flex-direction: column; gap: 10px; }
+  .lb img, .lb video { width: 100%; max-height: 78vh; object-fit: contain; border-radius: 10px; background: #fff; }
+  .lb figcaption { color: #cfd6e4; font-size: 14px; text-align: center; }
+  .lb .strip { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .lb .strip button { border: 2px solid transparent; border-radius: 8px; padding: 0; background: none; cursor: pointer; overflow: hidden; width: 96px; height: 60px; }
+  .lb .strip button img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; max-height: none; }
+  .lb .strip button.active { border-color: #8ab4ff; }
+  .lb .close { position: absolute; top: 14px; right: 16px; background: rgba(255,255,255,.12); color: #fff; border: 0; width: 40px; height: 40px; border-radius: 50%; font-size: 22px; cursor: pointer; }
+
+  .footer { margin-top: 56px; border-top: 1px solid var(--line); padding: 20px 0; color: var(--muted); font-size: 13.5px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead__inner">
+    <a class="brand" href="./">Xiaoyan Li | 李笑言</a>
+    <nav class="nav">
+      <a href="./">About</a>
+      <a href="./projects.html" aria-current="page">Projects</a>
+      <a href="./#publications">Publications</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Research Projects</h1>
+    <p>Selected projects from my work at the intersection of computational neuroscience and machine learning, large language models, computer vision, and AI for biomedicine and the environment. Click any figure or animation to view it in full size.</p>
+  </section>
+
+  <div class="filters" id="filters" role="tablist" aria-label="Filter projects by area">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="brain">Brain × AI</button>
+    <button data-filter="llm">LLMs &amp; Reasoning</button>
+    <button data-filter="cv">Computer Vision</button>
+    <button data-filter="bio">Biomedical AI</button>
+    <button data-filter="env">Environmental AI</button>
+    <button data-filter="theory">Theory &amp; Learning</button>
+    <span class="count" id="count"></span>
+  </div>
+
+  <section class="grid" id="grid">
+
+    <!-- IACD -->
+    <article class="card featured" data-cat="cv">
+      <div class="media" data-caption="IACD: a frozen Seeker detector and a trainable Hider that reasons from the adversary's perspective to find concealed targets" data-gallery="./projects/assets/iacd_overview.jpg">
+        <img src="./projects/assets/iacd_overview.jpg" alt="IACD framework overview: primary identity versus adversary identity in a garden scene" loading="lazy">
+        <span class="tag">ECCV 2026</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip cv">Computer Vision</span><span class="year">2026</span></div>
+        <h3>IACD: Iterative Adversarial Collaborative Detection</h3>
+        <p class="venue"><strong>European Conference on Computer Vision (ECCV)</strong> · Li, Jiang, Chen, Yang</p>
+        <p class="desc">A dual-perspective detection framework that pairs a frozen pretrained detector (the Seeker) with a lightweight trainable module (the Hider) that reasons inversely: given the environment, where would a target hide? The Hider identifies the Seeker's blind spots and residually amplifies neck features before a second detection pass, with no retraining of the base detector. Validated on illicit poppy cultivation and UAV imagery.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/IACD">Code</a></div>
+      </div>
+    </article>
+
+    <!-- Temporal Efficiency Paradox -->
+    <article class="card" data-cat="brain">
+      <div class="media" data-caption="Temporal dynamics of brain networks during naturalistic movie watching" data-gallery="./projects/assets/tep_spectrum.jpg|./projects/assets/tep_multiscale.jpg">
+        <img src="./projects/assets/tep_spectrum.jpg" alt="Network-specific spectral signatures and processing speed by network" loading="lazy">
+        <span class="tag">CogSci 2026</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip brain">Brain × AI</span><span class="year">2026</span></div>
+        <h3>The Temporal Efficiency Paradox: Fast Brains React, Slow Brains Understand</h3>
+        <p class="venue"><strong>CogSci 2026</strong> · corresponding author</p>
+        <p class="desc">An fMRI study of the cortical temporal hierarchy on about 65 hours of naturalistic movie data across seven functional networks. Slow, integrative networks encode content better than fast sensory ones, and sequence models (LSTM) outperform ridge regression uniformly across networks, showing that temporal integration is where the encoding advantage lives.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/temporal-efficiency-paradox">Code</a></div>
+      </div>
+    </article>
+
+    <!-- B321 -->
+    <article class="card" data-cat="brain">
+      <div class="media" data-caption="Encoding strength of visual, audio and language features across 1,000 cortical parcels, followed by the Modality Specificity Index" data-gallery="./projects/assets/b321_brain_encoding.gif|./projects/assets/b321_dissociation.gif">
+        <img src="./projects/assets/b321_brain_encoding.gif" alt="Animated cortical encoding maps for visual, audio and language features" loading="lazy">
+        <span class="tag">IEEE BIBM 2026</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip brain">Brain × AI</span><span class="year">2026</span></div>
+        <h3>Apparent Inefficiency, Hidden Optimality</h3>
+        <p class="venue"><strong>IEEE BIBM 2026</strong> · corresponding author</p>
+        <p class="desc">Why does the brain's multimodal attention not track feature strength? Using encoding models over visual, auditory and language features from naturalistic movies, we show that cortical attention allocation dissociates from raw feature strength, and that this apparent inefficiency is consistent with an optimal integration strategy.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/encoding-attention-dissociation">Code</a></div>
+      </div>
+    </article>
+
+    <!-- B322 -->
+    <article class="card" data-cat="llm">
+      <div class="media" data-caption="Interaction between task type and prompting condition across model families (4,800-trial factorial design)" data-gallery="./projects/assets/b322_interaction.gif|./projects/assets/b322_banner.jpg">
+        <img src="./projects/assets/b322_interaction.gif" alt="Animated interaction plot of dual-process behavioral signatures in LLMs" loading="lazy">
+        <span class="tag">IEEE BIBM 2026</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip llm">LLMs &amp; Reasoning</span><span class="year">2026</span></div>
+        <h3>Do Large Language Models Think Fast and Slow?</h3>
+        <p class="venue"><strong>IEEE BIBM 2026</strong> · regular paper</p>
+        <p class="desc">A 4,800-trial factorial study eliciting dual-process (System 1 / System 2) behavioral signatures from several LLM families, with a clinical reading of what fast versus slow responding implies for biomedical question answering and hedging behaviour.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/dual-process-llm">Code</a></div>
+      </div>
+    </article>
+
+    <!-- B323 -->
+    <article class="card" data-cat="brain llm">
+      <div class="media contain" data-caption="Best time-resolved encoding correlation between each transformer's hidden states and BOLD in six Theory-of-Mind regions (N = 58)" data-gallery="./projects/assets/b323_heatmap.jpg|./projects/assets/b323_attention.jpg">
+        <img src="./projects/assets/b323_heatmap.jpg" alt="Encoding heatmap per model and Theory-of-Mind ROI for social and physical narratives" loading="lazy">
+        <span class="tag">IEEE BIBM 2026</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip brain">Brain × AI</span><span class="chip llm">LLMs</span><span class="year">2026</span></div>
+        <h3>Attention Mechanisms for Theory of Mind</h3>
+        <p class="venue"><strong>IEEE BIBM 2026</strong> · regular paper</p>
+        <p class="desc">Transformers pass Theory-of-Mind behavioural tests, but do their internal representations align with the brain's ToM network? Comparing hidden states of GPT-2, Mistral and Qwen models with fMRI from 58 participants reading social versus physical narratives, we find only weak brain-transformer alignment despite behavioural success.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/attention-tom-brain-transformer">Code</a></div>
+      </div>
+    </article>
+
+    <!-- B324 -->
+    <article class="card" data-cat="brain">
+      <div class="media" data-caption="Network-level sweep: efficient brains bring a stable, well-organized network to the task rather than reorganizing under load" data-gallery="./projects/assets/b324_network_sweep.gif|./projects/assets/b324_threshold_sweep.gif">
+        <img src="./projects/assets/b324_network_sweep.gif" alt="Animated network sweep of stability under cognitive load" loading="lazy">
+        <span class="tag">IEEE BIBM 2026</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip brain">Brain × AI</span><span class="year">2026</span></div>
+        <h3>Network Stability as the Hallmark of Neural Efficiency Under Cognitive Load</h3>
+        <p class="venue"><strong>IEEE BIBM 2026</strong> · short paper</p>
+        <p class="desc">Do neurally efficient people reorganize their brain networks when a task gets harder, or do they bring a better-organized network in the first place? Using N-back working-memory fMRI, we find that stability, not reorganization, is the signature of efficiency, and audit the result against leakage and threshold choices.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/neural-efficiency-cognitive-load">Code</a></div>
+      </div>
+    </article>
+
+    <!-- B325 -->
+    <article class="card" data-cat="brain">
+      <div class="media" data-caption="Task activation maps across HCP tasks, and the permutation null versus the naive pairwise null" data-gallery="./projects/assets/b325_task_brains.gif|./projects/assets/b325_naive_vs_honest.gif">
+        <img src="./projects/assets/b325_task_brains.gif" alt="Animated task activation maps on the cortical surface" loading="lazy">
+        <span class="tag">IEEE BIBM 2026</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip brain">Brain × AI</span><span class="year">2026</span></div>
+        <h3>Routing-Level Signatures of Cognitive Efficiency</h3>
+        <p class="venue"><strong>IEEE BIBM 2026</strong> · regular paper</p>
+        <p class="desc">Multi-task HCP fMRI tested for routing-level signatures of cognitive efficiency. Only inter-subject routing consistency survives FDR correction, and a methodological caveat is made explicit: treating within-group pairwise correlations as independent inflates significance by many orders of magnitude, which a label-permutation null corrects.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/routing-signatures-efficiency">Code</a></div>
+      </div>
+    </article>
+
+    <!-- MoE sparse routing -->
+    <article class="card" data-cat="brain llm">
+      <div class="media contain" data-caption="Composite sparsity by task domain for high- versus low-efficiency groups, and effect sizes" data-gallery="./projects/assets/moe_radar.jpg|./projects/assets/moe_glass_brain.jpg">
+        <img src="./projects/assets/moe_radar.jpg" alt="Radar plot of neural sparsity across task domains" loading="lazy">
+        <span class="tag">Under review</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip brain">Brain × AI</span><span class="chip llm">LLMs</span><span class="year">2026</span></div>
+        <h3>Do Foundation Models Think Like Efficient Brains?</h3>
+        <p class="venue"><strong>Tsinghua Science and Technology</strong> · under review</p>
+        <p class="desc">Mixture-of-Experts models route each input through a sparse subset of experts; efficient brains recruit sparser, more selective activation. This project compares sparse routing in Switch, Qwen and DeepSeek MoE models with task-fMRI activation sparsity to ask whether the two kinds of intelligence share a computational principle.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/brain-moe-sparse-routing">Code</a></div>
+      </div>
+    </article>
+
+    <!-- Orgalyst -->
+    <article class="card featured" data-cat="bio llm">
+      <div class="media" data-caption="Orgalyst: one sentence in, a reproducible organoid analysis report out" data-gallery="./projects/assets/orgalyst_demo.gif|./projects/assets/orgalyst_architecture.gif|./projects/assets/orgalyst_gallery.jpg">
+        <img src="./projects/assets/orgalyst_demo.gif" alt="Animated session of the Orgalyst web interface analysing organoid images" loading="lazy">
+        <span class="tag">AI4S Competition</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip bio">Biomedical AI</span><span class="chip llm">LLM Agent</span><span class="year">2026</span></div>
+        <h3>Orgalyst: Conversational Analysis of Organoid Bright-Field Images</h3>
+        <p class="venue"><strong>AI4S Open Innovation · 5th Pazhou Algorithm Competition</strong> · AI + Organ-on-a-Chip, end-to-end system</p>
+        <p class="desc">A conversational analysis system for organoid bright-field microscopy. Every number is computed by a deterministic toolkit (segmentation, counting, morphology, growth and QC), and an assistant that knows the protocol plans the analysis, calls the tools and writes a reproducible report. Works across brain, colon, intestine, lung and PDAC organoids.</p>
+        <div class="links">
+          <a class="primary" href="https://github.com/xiaoyanLi629/orgalyst">Code</a>
+          <a href="https://huggingface.co/XiaoyanLi/orgalyst-weights/resolve/main/demo/orgalyst_demo_en.mp4">Demo video</a>
+          <a href="https://huggingface.co/XiaoyanLi/orgalyst-weights/resolve/main/demo/orgalyst_architecture_en.mp4">Architecture walkthrough</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- CareAttenNet -->
+    <article class="card" data-cat="bio">
+      <div class="media contain" data-caption="Correlation structure among 20 nursing activities in the SONAR wearable-sensor dataset" data-gallery="./projects/assets/careattennet_chord.jpg">
+        <img src="./projects/assets/careattennet_chord.jpg" alt="Chord diagram of nursing activity correlations" loading="lazy">
+        <span class="tag">IEEE BIBM 2025</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip bio">Biomedical AI</span><span class="year">2025</span></div>
+        <h3>CareAttenNet: Temporal Attention for Nursing Activity Recognition</h3>
+        <p class="venue"><strong>IEEE BIBM 2025</strong></p>
+        <p class="desc">A deep learning framework with temporal attention for automated recognition of 20 nursing activities from wearable sensor data (SONAR dataset), with a systematic ablation over correlation-aware convolution, attention LSTM and feature-selective components.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/CareAttenNet-Deep-Learning-Framework-with-Temporal-Attention-for-Nursing-Activity-Recognition">Code</a></div>
+      </div>
+    </article>
+
+    <!-- Psoriasis -->
+    <article class="card" data-cat="bio">
+      <div class="media contain" data-caption="Hierarchical multimodal fusion network integrating clinical, spectral and SEM image data" data-gallery="./projects/assets/psoriasis_arch.jpg">
+        <img src="./projects/assets/psoriasis_arch.jpg" alt="Architecture diagram of the hierarchical multimodal fusion network" loading="lazy">
+        <span class="tag">IEEE BIBM 2025</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip bio">Biomedical AI</span><span class="year">2025</span></div>
+        <h3>Multi-modal Deep Learning for Psoriasis Diagnosis</h3>
+        <p class="venue"><strong>IEEE BIBM 2025</strong></p>
+        <p class="desc">A biologically inspired hierarchical fusion architecture that integrates clinical indicators, infrared spectroscopy biomarkers and scanning electron microscopy of unaffected fingernails to distinguish psoriatic arthritis from psoriasis.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/A-Multi-modal-Deep-Learning-Framework-for-Psoriasis-Diagnosis">Code</a></div>
+      </div>
+    </article>
+
+    <!-- Prompt tuning / RMELS -->
+    <article class="card" data-cat="llm">
+      <div class="media contain" data-caption="Prompt tuning versus model tuning, and example cognitive-aptitude items" data-gallery="./projects/assets/rmels_prompt_tuning.jpg|./projects/assets/rmels_examples.jpg">
+        <img src="./projects/assets/rmels_prompt_tuning.jpg" alt="Diagram comparing model tuning and prompt tuning" loading="lazy">
+        <span class="tag">SenSys 2024 Workshop</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip llm">LLMs &amp; Reasoning</span><span class="year">2024</span></div>
+        <h3>Prompt Tuning-Based Cognitive Attention for Logical Inference in LLMs</h3>
+        <p class="venue"><strong>ACM RMELS Workshop, SenSys 2024</strong> · Li, Jiang</p>
+        <p class="desc">A prompt-tuning and retrieval-augmented framework that steers an LLM's attention toward the cognitively relevant parts of a problem, raising GPT-4 accuracy on the Criteria Cognitive Aptitude Test from 75.0% to 81.2% and showing that attention is critical for long-chain logical inference.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/RMELS2024">Code</a></div>
+      </div>
+    </article>
+
+    <!-- Coffee-ring dataset -->
+    <article class="card" data-cat="env">
+      <div class="media" data-caption="Optical, SEM and EDS imaging of the same colloidal coffee-ring deposits from environmental water samples" data-gallery="./projects/assets/crdataset_overview.jpg|./projects/assets/crdataset_analysis.jpg">
+        <img src="./projects/assets/crdataset_overview.jpg" alt="Grid of optical, SEM and EDS images of coffee-ring deposits" loading="lazy">
+        <span class="tag">Dataset</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip env">Environmental AI</span><span class="year">2026</span></div>
+        <h3>A Physically-Grounded Multi-modal Imaging Dataset of Coffee-Ring Deposits</h3>
+        <p class="venue"><strong>Scientific Data</strong> · in submission</p>
+        <p class="desc">A multi-modal dataset pairing optical microscopy, scanning electron microscopy and energy-dispersive X-ray mapping of colloidal coffee-ring deposits from environmental water samples, with analysis code for element-separation and morphology studies.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/coffee-ring-multimodal-dataset">Code</a></div>
+      </div>
+    </article>
+
+    <!-- CRENet -->
+    <article class="card" data-cat="env">
+      <div class="media contain" data-caption="Calibration of the element-separation index against optical features" data-gallery="./projects/assets/crenet_esi.jpg">
+        <img src="./projects/assets/crenet_esi.jpg" alt="Grid search plot for the element separation index" loading="lazy">
+        <span class="tag">Multi-modal ML</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip env">Environmental AI</span><span class="year">2026</span></div>
+        <h3>CRENet: Multi-modal Learning on Coffee-Ring Patterns for Water Quality</h3>
+        <p class="venue"><strong>Multi-modal CNN with self-attention fusion</strong></p>
+        <p class="desc">Fuses optical microscopy, SEM and EDS modalities of coffee-ring deposits to classify the environmental conditions under which a water sample was deposited and to quantify element separation within the ring.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/CRENet-MultiModal-CoffeeRing">Code</a></div>
+      </div>
+    </article>
+
+    <!-- DBPs -->
+    <article class="card" data-cat="env">
+      <div class="media contain" data-caption="Chemistry-aware group attention weights, compared with permutation and SHAP importance" data-gallery="./projects/assets/dbps_attention.jpg">
+        <img src="./projects/assets/dbps_attention.jpg" alt="Bar charts of attention, permutation and SHAP importance across chemical feature groups" loading="lazy">
+        <span class="tag">Explainable DL</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip env">Environmental AI</span><span class="year">2026</span></div>
+        <h3>Chemistry-Informed Explainable Deep Learning for Disinfection By-Products</h3>
+        <p class="venue"><strong>Drinking-water treatment</strong></p>
+        <p class="desc">Predicts disinfection by-products in drinking water with a model whose inputs are partitioned into chemically motivated groups, with group-level attention validated against known formation chemistry and a hierarchical consistency loss that enforces HAA aggregate constraints. Benchmarked against 20 classical, ensemble and deep configurations on two datasets.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/Chemistry-Informed-DBPs-Prediction">Code</a></div>
+      </div>
+    </article>
+
+    <!-- Analyst 2020 -->
+    <article class="card" data-cat="env cv">
+      <div class="media" data-caption="Coffee-ring fingerprints of tap water from Michigan cities, grouped by treatment method" data-gallery="./projects/assets/analyst_rings.jpg">
+        <img src="./projects/assets/analyst_rings.jpg" alt="Grid of coffee-ring images of tap water samples grouped by water treatment" loading="lazy">
+        <span class="tag">Analyst 2020</span><span class="zoom">&#x26F6;</span>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="chip env">Environmental AI</span><span class="chip cv">CV</span><span class="year">2020</span></div>
+        <h3>Tap Water Fingerprinting with a CNN Built from Coffee-Ring Images</h3>
+        <p class="venue"><strong>Analyst</strong> 145(4), 1511–1523 · Li, Sanderson, Allen, Lahr</p>
+        <p class="desc">A one-dollar, seconds-long water test: a droplet dried on aluminium leaves a coffee-ring residue that a phone camera can image, and a CNN classifies the pattern into water-chemistry groups with accuracy comparable to human clustering. The basis of a Transformer-U-Net follow-up that quantifies contaminant concentrations from 625 images and 4,200 EDS maps.</p>
+        <div class="links">
+          <a class="primary" href="https://pubs.rsc.org/en/content/articlelanding/2020/an/c9an01624d">Paper</a>
+          <a href="https://github.com/xiaoyanLi629/CNN_coffee_ring_effect">Code &amp; data</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- NeurIPS 2021 -->
+    <article class="card" data-cat="bio">
+      <div class="media placeholder"><span class="glyph">🏆</span></div>
+      <div class="body">
+        <div class="meta"><span class="chip bio">Biomedical AI</span><span class="year">2021</span></div>
+        <h3>1st Place, NeurIPS 2021 Single-Cell Multimodal Competition</h3>
+        <p class="venue"><strong>NeurIPS 2021</strong> · Team DANCE</p>
+        <p class="desc">The first graph neural network to predict RNA expression from chromatin accessibility, achieving the overall lowest RMSE (0.2835) among all competing teams. Grew out of a heterogeneous GNN that removes batch effects in single-cell sequencing data by passing messages along gene-pathway edges.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/single_cell_data_analysis">Code</a></div>
+      </div>
+    </article>
+
+    <!-- PI-GNN -->
+    <article class="card" data-cat="theory">
+      <div class="media placeholder"><span class="glyph">🕸️</span></div>
+      <div class="body">
+        <div class="meta"><span class="chip theory">Theory &amp; Learning</span><span class="year">2026</span></div>
+        <h3>PI-GNN: Prior-Informed Graph Neural Networks for Link Prediction</h3>
+        <p class="venue"><strong>Graph learning</strong></p>
+        <p class="desc">Integrates domain-knowledge priors into graph neural networks for link prediction, improving AUC over strong baselines such as SEAL and NCN on Cora and Citeseer.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/PI-GNN-anonymous">Code</a></div>
+      </div>
+    </article>
+
+    <!-- EART -->
+    <article class="card" data-cat="theory">
+      <div class="media placeholder"><span class="glyph">🎭</span></div>
+      <div class="body">
+        <div class="meta"><span class="chip theory">Theory &amp; Learning</span><span class="year">2026</span></div>
+        <h3>EART: Embodied Adversarial Reasoning Theory</h3>
+        <p class="venue"><strong>Thinking Like the Adversary</strong> · cognitive identity transformation in embodied AI</p>
+        <p class="desc">A theoretical framework in which an embodied agent temporarily adopts the cognitive perspective of an adversary, inspired by how investigators reason about concealment. It provides the conceptual basis for the IACD detection framework.</p>
+        <div class="links"><a class="primary" href="https://github.com/xiaoyanLi629/EART">Code</a></div>
+      </div>
+    </article>
+
+  </section>
+
+  <footer class="footer">
+    <span>© 2026 Xiaoyan Li</span>
+    <span><a href="./">About</a> · <a href="https://github.com/xiaoyanLi629">GitHub</a> · <a href="https://scholar.google.com/citations?user=qWgz8HcAAAAJ&hl=en">Google Scholar</a></span>
+  </footer>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Figure viewer">
+  <button class="close" id="lbClose" aria-label="Close">×</button>
+  <figure>
+    <img id="lbImg" src="" alt="">
+    <figcaption id="lbCap"></figcaption>
+    <div class="strip" id="lbStrip"></div>
+  </figure>
+</div>
+
+<script>
+(function () {
+  // filters
+  var buttons = document.querySelectorAll('#filters button');
+  var cards = document.querySelectorAll('#grid .card');
+  var count = document.getElementById('count');
+  function apply(f) {
+    var n = 0;
+    cards.forEach(function (c) {
+      var ok = f === 'all' || c.dataset.cat.split(' ').indexOf(f) >= 0;
+      c.classList.toggle('hidden', !ok); if (ok) n++;
+    });
+    count.textContent = n + (n === 1 ? ' project' : ' projects');
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      buttons.forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active'); apply(b.dataset.filter);
+    });
+  });
+  apply('all');
+
+  // lightbox
+  var lb = document.getElementById('lb'), img = document.getElementById('lbImg'),
+      cap = document.getElementById('lbCap'), strip = document.getElementById('lbStrip');
+  function open(gallery, caption) {
+    strip.innerHTML = '';
+    cap.textContent = caption || '';
+    function show(i) {
+      img.src = gallery[i];
+      strip.querySelectorAll('button').forEach(function (b, j) { b.classList.toggle('active', i === j); });
+    }
+    if (gallery.length > 1) {
+      gallery.forEach(function (src, i) {
+        var b = document.createElement('button'); var t = document.createElement('img'); t.src = src; t.alt = '';
+        b.appendChild(t); b.addEventListener('click', function (e) { e.stopPropagation(); show(i); }); strip.appendChild(b);
+      });
+    }
+    show(0); lb.classList.add('open'); document.body.style.overflow = 'hidden';
+  }
+  function close() { lb.classList.remove('open'); img.src = ''; document.body.style.overflow = ''; }
+  document.querySelectorAll('.media[data-gallery]').forEach(function (m) {
+    m.addEventListener('click', function () { open(m.dataset.gallery.split('|'), m.dataset.caption); });
+  });
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target === img) close(); });
+  document.getElementById('lbClose').addEventListener('click', close);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
+</script>
+</body>
+</html>
