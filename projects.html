@@ -176,6 +176,36 @@
     </div>
   </article>
 
+  <!-- NucSeg3D -->
+  <article class="pub" data-cat="cv bio" data-year="2026">
+    <div class="teaser fit" data-caption="S1: a 3D residual decoder grown from the Cellpose-SAM encoder, its training schedule, how axial flow is learned, and inference on one test volume." data-gallery="./projects/assets/nucseg3d_fig1.jpg">
+      <img src="./projects/assets/nucseg3d_fig1.jpg" alt="Architecture, training schedule and inference pipeline of the S1 3D nucleus segmentation model" loading="lazy">
+    </div>
+    <div>
+      <h3 class="tt"><a href="https://github.com/xiaoyanLi629/NucSeg3D">NucSeg3D: What Volumetric Fine-Tuning Adds to a 2D Foundation Model for 3D Nucleus Segmentation</a></h3>
+      <p class="au"><b>Xiaoyan Li</b>, Juanjuan Ye, Liwen Xu, Cuicui Jiang, Jiaoping Chen</p>
+      <p class="ve"><em>Manuscript in preparation</em> · code, benchmark splits and leakage audit</p>
+      <p class="lk"><a href="https://github.com/xiaoyanLi629/NucSeg3D">code</a></p>
+      <p class="sm">S1 turns Cellpose-SAM, a 2D cell-segmentation foundation model, into a native 3D model: the fine-tuned ViT-L encoder runs on every plane and a new 3D residual decoder, initialised to zero, learns what the third dimension adds. It is compared with 2D fine-tuning on the same data on a 13-dataset benchmark of 227 test volumes, each audited for overlap with the training data. Macro F1@0.7 rises from 0.313 (original Cellpose-SAM) to 0.542 (2D control) and 0.579 (S1); the repository also states where the 3D model does not help.</p>
+      <div class="chips"><span class="chip cv">Computer Vision</span><span class="chip bio">Biomedical AI</span></div>
+    </div>
+  </article>
+
+  <!-- Water chemistry from a dried droplet -->
+  <article class="pub" data-cat="env cv" data-year="2026">
+    <div class="teaser" data-caption="One test droplet going through the model: droplet outline, predicted versus measured element maps, crystal seeds, grown regions, phases, and predicted versus true salt concentrations." data-gallery="./projects/assets/waterchem_pipeline.gif">
+      <img src="./projects/assets/waterchem_pipeline.gif" alt="Animated walk-through of the model on one dried-droplet SEM image" loading="lazy"><span class="n">GIF</span>
+    </div>
+    <div>
+      <h3 class="tt"><a href="https://github.com/xiaoyanLi629/coffee-ring-water-chemistry">Reading Water Chemistry from a Dried Droplet</a></h3>
+      <p class="au"><b>Xiaoyan Li</b> et al.</p>
+      <p class="ve"><em>Manuscript under review</em> · end-to-end model</p>
+      <p class="lk"><a href="https://github.com/xiaoyanLi629/coffee-ring-water-chemistry">code</a> · <a href="https://doi.org/10.6084/m9.figshare.34516434">data</a></p>
+      <p class="sm">An end-to-end model that estimates the composition of a water sample from one SEM image of its dried residue. On the way it predicts checkable intermediate outputs: the droplet outline, seven elemental maps, crystal seeds, grown crystal regions and crystal phases; EDS maps supervise these steps in training only. On 625 droplets from 125 recipes it reaches mean R&sup2; 0.72 over seven elements under recipe-grouped cross-validation, level with the strongest SEM-only baselines, and is more robust than all eleven when whole imaging days are held out (0.64 versus 0.54 for the best baseline).</p>
+      <div class="chips"><span class="chip env">Environmental AI</span><span class="chip cv">Computer Vision</span></div>
+    </div>
+  </article>
+
   <!-- Coffee ring dataset -->
   <article class="pub" data-cat="env" data-year="2026">
     <div class="teaser" data-caption="Optical, SEM and EDS imaging of the same colloidal coffee-ring deposits from environmental water samples." data-gallery="./projects/assets/crdataset_overview.jpg|./projects/assets/crdataset_analysis.jpg">
